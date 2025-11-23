@@ -20,13 +20,13 @@
 name: Build and deploy ASP.Net Core app to an Azure Web App
 
 env:
-  AZURE_WEBAPP_NAME: scalability-sample-5E    
-  AZURE_WEBAPP_PACKAGE_PATH: chapter02/scalability-sample-5E/publish      
+  AZURE_WEBAPP_NAME: scalability-sample-5E
+  AZURE_WEBAPP_PACKAGE_PATH: chapter02/scalability-sample-5E/publish
   AZURE_WEBAPP_PUBLISH_PROFILE: ${{ secrets.scalability_sample_45 }}
   CONFIGURATION: Release
   DOTNET_CORE_VERSION: 10.0.x
   WORKING_DIRECTORY: chapter02/scalability-sample-5E
-  
+
 on:
   push:
     branches: [ "main" ]
@@ -39,28 +39,37 @@ jobs:
   build-and-deploy:
     runs-on: windows-latest
     steps:
-    - uses: actions/checkout@v2
-    - uses: actions/setup-dotnet@v1.8.0
-      with:
-        include-prerelease: True
-        dotnet-version: ${{ env.DOTNET_CORE_VERSION }}
-    - name: Restore
-      run: dotnet restore "${{ env.WORKING_DIRECTORY }}"
-    - name: Build
-      run: dotnet build "${{ env.WORKING_DIRECTORY }}" --configuration ${{ env.CONFIGURATION }} --no-restore
-    - name: Test
-      run: dotnet test "${{ env.WORKING_DIRECTORY }}" --no-build
-    - name: Publish
-      run: dotnet publish "${{ env.WORKING_DIRECTORY }}" --configuration ${{ env.CONFIGURATION }} --no-build --output "${{ env.AZURE_WEBAPP_PACKAGE_PATH }}"
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v3
+        with:
+          include-prerelease: true
+          dotnet-version: ${{ env.DOTNET_CORE_VERSION }}
+      - name: Cache NuGet packages
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.nuget/packages
+            ~/.local/share/NuGet
+          key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj') }}
+      - name: Restore
+        run: dotnet restore "${{ env.WORKING_DIRECTORY }}"
+      - name: Tool restore
+        run: dotnet tool restore
+      - name: Build
+        run: dotnet build "${{ env.WORKING_DIRECTORY }}" --configuration ${{ env.CONFIGURATION }} --no-restore
+      - name: Test
+        run: dotnet test "${{ env.WORKING_DIRECTORY }}" --no-build --verbosity normal
+      - name: Publish
+        run: dotnet publish "${{ env.WORKING_DIRECTORY }}" --configuration ${{ env.CONFIGURATION }} --no-build --output "${{ env.AZURE_WEBAPP_PACKAGE_PATH }}"
 
-    - name: Deploy to Azure WebApp
-      uses: azure/webapps-deploy@v2
-      with:
-        app-name: ${{ env.AZURE_WEBAPP_NAME }}
-        package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
-        publish-profile: ${{ env.AZURE_WEBAPP_PUBLISH_PROFILE }}
-    - name: Publish Artifacts
-      uses: actions/upload-artifact@v1.0.0
-      with:
-        name: webapp
-        path: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+      - name: Deploy to Azure WebApp
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: ${{ env.AZURE_WEBAPP_NAME }}
+          package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+          publish-profile: ${{ env.AZURE_WEBAPP_PUBLISH_PROFILE }}
+      - name: Publish Artifacts
+        uses: actions/upload-artifact@v4
+        with: 
+          name: webapp
+          path: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
