@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="checking-platform/checking-platform.csproj" />
+  <Project Path="performance-issues/performance-issues.csproj" />
+  <Project Path="scalability-sample-5E/scalability-sample-5E.csproj" />
+  <Project Path="SmartSearch/SmartSearch.csproj" />
+</Solution>
