@@ -22,7 +22,7 @@ name: Build and deploy ASP.Net Core app to an Azure Web App
 env:
   AZURE_WEBAPP_NAME: scalability-sample-5E
   AZURE_WEBAPP_PACKAGE_PATH: chapter02/scalability-sample-5E/publish
-  AZURE_WEBAPP_PUBLISH_PROFILE: ${{ secrets.scalability_sample_45 }}
+  AZURE_WEBAPP_PUBLISH_PROFILE: ${{ secrets.SCALABILITY_SAMPLE_5E }}
   CONFIGURATION: Release
   DOTNET_CORE_VERSION: 10.0.x
   WORKING_DIRECTORY: chapter02/scalability-sample-5E
