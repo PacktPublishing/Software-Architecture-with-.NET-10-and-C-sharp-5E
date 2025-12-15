@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk.Worker">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UserSecretsId>dotnet-GrpcMicroService-7C802780-D742-4087-9CB7-470DF6CB14ED</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    
+    <PackageReference Include="Google.Protobuf" Version="3.33.2" />
+    <PackageReference Include="Grpc.Tools" Version="2.76.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="10.0.1" />
+    <PackageReference Include="RabbitMQ.Client" Version="7.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\WorkerMApplicationLayer\WorkerMApplicationServices.csproj" />
+    <ProjectReference Include="..\WorkerMDBDriver\WorkerMDBDriver.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Protobuf Include="Protos\messages.proto" GrpcServices="Client" />
+  </ItemGroup>
+  
+</Project>

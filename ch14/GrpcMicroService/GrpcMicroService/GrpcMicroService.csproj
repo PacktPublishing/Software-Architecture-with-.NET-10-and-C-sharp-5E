@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Grpc.AspNetCore" Version="2.64.0" />
+  </ItemGroup>
+	<ItemGroup>
+		<Protobuf Include="Protos\counting.proto" GrpcServices="Server" />
+	</ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\WorkerMApplicationLayer\WorkerMApplicationServices.csproj" />
+    <ProjectReference Include="..\WorkerMDBDriver\WorkerMDBDriver.csproj" />
+  </ItemGroup>
+
+</Project>
