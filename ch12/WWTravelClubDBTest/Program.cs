@@ -4,28 +4,29 @@ using WWTravelClubDB;
 using WWTravelClubDB.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
+using System.Threading.Tasks;
 namespace WWTravelClubDBTest
 {
     class Program
     {
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
             Console.WriteLine("program start: populate database");
             Console.ReadKey();
 
             var context = new LibraryDesignTimeDbContextFactory()
                 .CreateDbContext();
-            context.Database.EnsureCreated();
+            await context.Database.EnsureCreatedAsync();
             var firstDestination = new Destination
             {
-                Id = Guid.NewGuid().ToString(),
+                id = Guid.NewGuid().ToString(),
                 Name = "Florence",
                 Country = "Italy",
                 Packages = new List<Package>()
             {
                 new Package
                 {
-                    Id=Guid.NewGuid().ToString(),
+                    id=Guid.NewGuid().ToString(),
                     Name = "Summer in Florence",
                     StartValidityDate = new DateTime(2019, 6, 1),
                     EndValidityDate = new DateTime(2019, 10, 1),
@@ -34,7 +35,7 @@ namespace WWTravelClubDBTest
                 },
                 new Package
                 {
-                    Id=Guid.NewGuid().ToString(),
+                    id=Guid.NewGuid().ToString(),
                     Name = "Winter in Florence",
                     StartValidityDate = new DateTime(2019, 12, 1),
                     EndValidityDate = new DateTime(2020, 2, 1),
@@ -44,33 +45,33 @@ namespace WWTravelClubDBTest
             }
             };
             context.Destinations.Add(firstDestination);
-            context.SaveChanges();
+            await context.SaveChangesAsync();
             Console.WriteLine(
                 "DB populated: first destination id is " +
-                firstDestination.Id);
+                firstDestination.id);
             Console.ReadKey();
 
-            var toModify = context.Destinations
+             var toModify = await context.Destinations
                 .Where(m => m.Name == "Florence")
-                .FirstOrDefault();
+                .FirstOrDefaultAsync();
 
             toModify.Description = 
                             "Florence is a famous historical Italian town";
             foreach (var package in toModify.Packages)
                             package.Price = package.Price * 1.1m;
-            context.SaveChanges();
+            await context.SaveChangesAsync();
 
-            var verifyChanges= context.Destinations
+            var verifyChanges= await context.Destinations
                     .Where(m => m.Name == "Florence")
-                    .FirstOrDefault();
+                    .FirstOrDefaultAsync();
 
             Console.WriteLine(
                 "New Florence description: " +
                 verifyChanges.Description);
             Console.ReadKey();
             var period = new DateTime(2019, 8, 10);
-            var list = context.Destinations
-                .AsEnumerable()
+            var list = await context.Destinations
+                .AsAsyncEnumerable()
                 .SelectMany(m => m.Packages)
                 .Where(m => period >= m.StartValidityDate
                 && period <= m.EndValidityDate)
@@ -80,11 +81,11 @@ namespace WWTravelClubDBTest
                     EndValidityDate=m.EndValidityDate,
                     Name=m.Name,
                     DurationInDays=m.DurationInDays,
-                    Id=m.Id,
+                    id=m.id,
                     Price=m.Price,
                     DestinationName=m.MyDestination.Name
                 })
-                .ToList();
+                .ToListAsync();
             foreach (var result in list)
                 Console.WriteLine(result.ToString());
             Console.ReadKey();

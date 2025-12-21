@@ -6,7 +6,7 @@ namespace WWTravelClubDB.Models
     public class Package
     {
         [Key]
-        public string Id { get; set; }
+        public string id { get; set; }
         
         public string Name { get; set; }
         

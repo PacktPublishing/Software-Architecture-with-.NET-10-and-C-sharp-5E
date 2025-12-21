@@ -8,11 +8,11 @@ namespace CosmosDBClientSample
 {
     class Program
     {
-        private const string endpoint = "insert here your account URL";
-        private const string key = "insert here your key";
+        private const string endpoint = "https://[your-endpoint].documents.azure.com:443/";
+        private const string key = "[yourkey]";
 
         private const string databaseId = "WWTravelClub";
-        private const string containerId = "admin";
+        private const string containerId = "Destination";
 
         public static async Task Main()
         {
@@ -49,7 +49,7 @@ namespace CosmosDBClientSample
         {
             var destinationToAdd = new Destination
             {
-                Id = "1",
+                id = "1",
                 Country = "Brazil",
                 DestinationName = "São Paulo",
                 Description = "The biggest city in Brazil",
@@ -57,7 +57,7 @@ namespace CosmosDBClientSample
                 {
                     new Package
                     {
-                        Id = "1",
+                        id = "1",
                         Description = "Visit Paulista Avenue",
                         DurationInDays = 3,
                         Price = 5000,
@@ -68,20 +68,25 @@ namespace CosmosDBClientSample
 
             try
             {
-                await container.ReadItemAsync<Destination>(destinationToAdd.Id, new PartitionKey(destinationToAdd.DestinationName));
+                var item = await container.ReadItemAsync<Destination>(destinationToAdd.id, new PartitionKey(destinationToAdd.DestinationName));
             }
             catch (CosmosException ex) when (ex.StatusCode == System.Net.HttpStatusCode.NotFound)
             {
-                // Create an item in the container representing the Andersen family. Note we provide the value of the partition key for this item, which is "Andersen"
-                await container.CreateItemAsync<Destination>(destinationToAdd, new PartitionKey(destinationToAdd.DestinationName));
+                try
+                {
+                    await container.CreateItemAsync<Destination>(destinationToAdd, new PartitionKey(destinationToAdd.DestinationName));
+                }
+                catch (CosmosException err)
+                {
+                    Console.WriteLine(err.ToString());
+                }
             }
         }
     }
 
     public class Destination
     {
-        [JsonPropertyName("id")]
-        public string Id { get; set; }
+        public string id { get; set; }
 
         public string DestinationName { get; set; }
 
@@ -92,8 +97,7 @@ namespace CosmosDBClientSample
 
     public class Package
     {
-        [JsonPropertyName ("id")]
-        public string Id { get; set; }
+        public string id { get; set; }
 
         public string Name { get; set; }
 

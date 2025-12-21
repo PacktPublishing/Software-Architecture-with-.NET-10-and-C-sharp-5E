@@ -6,7 +6,7 @@ namespace WWTravelClubDBTest
 {
     public class PackagesListDTO
     {
-        public string Id { get; set; }
+        public string id { get; set; }
         public string Name { get; set; }
         public decimal Price { get; set; }
         public int DurationInDays { get; set; }
