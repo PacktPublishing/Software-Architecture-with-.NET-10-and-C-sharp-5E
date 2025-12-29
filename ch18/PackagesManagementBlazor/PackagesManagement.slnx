@@ -1,0 +1,10 @@
+<Solution>
+  <Project Path="PackagesManagementApplicationServices/PackagesManagementApplicationServices.csproj" />
+  <Project Path="PackagesManagementBlazor.Client/PackagesManagementBlazor.Client.csproj" Id="72583269-c681-4cf3-9784-fff3b19f8254" />
+  <Project Path="PackagesManagementBlazor.Server/PackagesManagementBlazor.Server.csproj" Id="75175021-152c-4fac-bbdb-4c9df5e47d89" />
+  <Project Path="PackagesManagementBlazor.Shared/PackagesManagementBlazor.Shared.csproj" Id="9ecb5845-2d95-479a-abc3-adf875258a5e" />
+  <Project Path="PackagesManagementDB/PackagesManagementDB.csproj" Id="cbba50d8-cc4c-4f92-a17a-56595fd87c79" />
+  <Project Path="PackagesManagementDomainModel/PackagesManagementDomainModel.csproj" />
+  <Project Path="PackagesManagementDomainServices/PackagesManagementDomainServices.csproj" />
+  <Project Path="PackagesManagementMAUI/PackagesManagementMAUI.csproj" Id="83a137ab-a921-4ca5-8540-ad20f304c5fb" />
+</Solution>
