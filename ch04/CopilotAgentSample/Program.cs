@@ -9,9 +9,14 @@ namespace CopilotAgentSample
         static void Main(string[] args)
         {
             Console.WriteLine("=== Copilot Agent Sample: Code Refactoring Demo ===\n");
+            Console.WriteLine("This sample demonstrates how to refactor poorly written code into production-quality code.\n");
+
+            // Demonstrate the bad code (commented out to prevent execution)
+            Console.WriteLine("--- BAD CODE EXAMPLE (see BadCodeImplementation class) ---");
+            Console.WriteLine("Issues: Poor naming, tight coupling, no error handling, inefficient algorithms\n");
 
             // Demonstrate the refactored code
-            Console.WriteLine("Running refactored code example:");
+            Console.WriteLine("--- REFACTORED CODE EXAMPLE ---");
             RunRefactoredExample();
         }
 
@@ -51,6 +56,77 @@ namespace CopilotAgentSample
             }
         }
     }
+
+    #region BAD CODE EXAMPLE - DO NOT USE IN PRODUCTION
+
+    // This section contains intentionally poor code to demonstrate anti-patterns
+    // Compare this with the refactored code below to see the improvements
+
+    // Bad practice: Poor naming, tight coupling, no error handling
+    public class BadCodeImplementation
+    {
+        // Bad: Magic numbers, no encapsulation
+        public List<string> data = new List<string>();
+        public int x = 0;
+
+        // Bad: Non-descriptive method name, no validation
+        public void do_stuff(string s)
+        {
+            data.Add(s);
+            x++;
+        }
+
+        // Bad: Nested loops, inefficient algorithm, poor readability
+        public string find(string val)
+        {
+            for (int i = 0; i < data.Count; i++)
+            {
+                for (int j = 0; j < data[i].Length; j++)
+                {
+                    if (data[i].Contains(val))
+                    {
+                        return data[i];
+                    }
+                }
+            }
+            return "";
+        }
+
+        // Bad: Catching generic exception, swallowing errors
+        public void calc()
+        {
+            try
+            {
+                int result = 10 / x;
+                Console.WriteLine(result);
+            }
+            catch (Exception ex)
+            {
+                // Bad: Empty catch block
+            }
+        }
+
+        // Bad: God method doing multiple responsibilities
+        public void ProcessData(List<string> items)
+        {
+            // Validation
+            if (items == null) return;
+            
+            // Processing
+            foreach (var item in items)
+            {
+                data.Add(item.ToUpper());
+            }
+            
+            // Logging
+            Console.WriteLine("Processed " + items.Count + " items");
+            
+            // Persistence
+            System.IO.File.WriteAllLines("output.txt", data);
+        }
+    }
+
+    #endregion
 
     // REFACTORED CODE: Following SOLID principles and best practices
 
