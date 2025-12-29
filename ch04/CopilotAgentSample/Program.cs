@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace CopilotAgentSample
 {
@@ -92,8 +93,8 @@ namespace CopilotAgentSample
                 throw new ArgumentException("Search value cannot be null or empty", nameof(searchValue));
             }
 
-            // Efficient single-pass search with proper null handling
-            return _data.Find(item => 
+            // Efficient single-pass search with LINQ
+            return _data.FirstOrDefault(item => 
                 item?.Contains(searchValue, StringComparison.OrdinalIgnoreCase) ?? false) 
                 ?? string.Empty;
         }
@@ -184,19 +185,19 @@ namespace CopilotAgentSample
             _fileService = fileService ?? throw new ArgumentNullException(nameof(fileService));
         }
 
-        public void ProcessAndSave(List<string> items, string filename)
+        public void ProcessAndSave(IEnumerable<string> items, string filename)
         {
             // Validation
-            if (items == null || items.Count == 0)
+            if (items == null || !items.Any())
             {
-                throw new ArgumentException("Items list cannot be null or empty", nameof(items));
+                throw new ArgumentException("Items collection cannot be null or empty", nameof(items));
             }
 
             // Processing
             var transformedData = _processor.TransformToUpperCase(items);
             
             // Logging
-            _logger.Log($"Processed {items.Count} items");
+            _logger.Log($"Processed {transformedData.Count} items");
 
             // Persistence
             _fileService.SaveToFile(filename, transformedData);
