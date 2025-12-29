@@ -1,0 +1,6 @@
+@WWTravelClubWebAPI_HostAddress = http://localhost:5285
+
+GET {{WWTravelClubWebAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

@@ -1,0 +1,7 @@
+<Solution>
+  <Project Path="PackagesManagement/PackagesManagement.csproj" />
+  <Project Path="PackagesManagementApplicationServices/PackagesManagementApplicationServices.csproj" />
+  <Project Path="PackagesManagementDB/PackagesManagementDB.csproj" Id="cbba50d8-cc4c-4f92-a17a-56595fd87c79" />
+  <Project Path="PackagesManagementDomainModel/PackagesManagementDomainModel.csproj" />
+  <Project Path="PackagesManagementDomainServices/PackagesManagementDomainServices.csproj" />
+</Solution>
