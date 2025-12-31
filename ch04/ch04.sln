@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 18
-VisualStudioVersion = 18.3.11312.210 d18.3
+VisualStudioVersion = 18.3.11312.210
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SampleCodeAfterAnalysis", "SampleCodeAfterAnalysis\SampleCodeAfterAnalysis.csproj", "{64672539-DE08-4ADC-95E4-D001A9CAC4BB}"
 EndProject
@@ -12,6 +12,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleCodeBeforeAnalysis", "SampleCodeBeforeAnalysis\SampleCodeBeforeAnalysis.csproj", "{45B56970-B247-43E7-87C6-1684D634C368}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CopilotAgentSample", "CopilotAgentSample\CopilotAgentSample.csproj", "{1F3BE2A6-43D1-4356-A9D9-ED17C4F10A4D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleCodeAfterCopilot", "SampleCodeAfterCopilot\SampleCodeAfterCopilot.csproj", "{17D8EEEA-2AFA-4D83-BFBD-B74779115CB8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{1F3BE2A6-43D1-4356-A9D9-ED17C4F10A4D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1F3BE2A6-43D1-4356-A9D9-ED17C4F10A4D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1F3BE2A6-43D1-4356-A9D9-ED17C4F10A4D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{17D8EEEA-2AFA-4D83-BFBD-B74779115CB8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{17D8EEEA-2AFA-4D83-BFBD-B74779115CB8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{17D8EEEA-2AFA-4D83-BFBD-B74779115CB8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{17D8EEEA-2AFA-4D83-BFBD-B74779115CB8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
