@@ -3,10 +3,28 @@
 	<PropertyGroup>
 		<TargetFramework>net10.0</TargetFramework>
 		<Nullable>enable</Nullable>
+		
+		<!-- NuGet Package Metadata -->
+		<PackageId>dotNet10Library</PackageId>
+		<Version>1.0.0</Version>
+		<Authors>Gabriel Lara Baptista</Authors>
+		<Company>Software Architecture 5th Edition</Company>
+		<Description>A .NET 10 library for managing and calculating evaluations for various types of content with support for different user types and evaluation strategies.</Description>
+		<PackageTags>evaluation;rating;content;dotnet10</PackageTags>
+		<PackageProjectUrl>https://github.com/PacktPublishing/Software-Architecture-with-.NET-10-and-C-sharp-5E</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/PacktPublishing/Software-Architecture-with-.NET-10-and-C-sharp-5E</RepositoryUrl>
+		<RepositoryType>git</RepositoryType>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DocumentationFile></DocumentationFile>
   </PropertyGroup>
+
+	<ItemGroup>
+		<None Include="README.md" Pack="true" PackagePath="\" />
+	</ItemGroup>
 
 </Project>

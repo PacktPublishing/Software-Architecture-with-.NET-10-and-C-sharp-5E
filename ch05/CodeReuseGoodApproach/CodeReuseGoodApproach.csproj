@@ -5,8 +5,4 @@
     <TargetFramework>net10.0</TargetFramework>
   </PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\dotNet10Library\dotNet10Library.csproj" />
-  </ItemGroup>
-
 </Project>
