@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="dotNet10Library.Evaluations.Evaluation">
+    <Position X="3.75" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAADAAAAAAAgAAAAAAAAAAAAAAAAAAAAAgAAAAEAAAA=</HashCode>
+      <FileName>Evaluations\Evaluation.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="dotNet10Library.Evaluations.Types.PrimeUsersEvaluation">
+    <Position X="2" Y="5.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAA=</HashCode>
+      <FileName>Evaluations\Types\PrimeUsersEvaluation.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="dotNet10Library.Evaluations.Types.BasicUsersEvaluation">
+    <Position X="5.25" Y="5.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAA=</HashCode>
+      <FileName>Evaluations\Types\BasicUsersEvaluation.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Comment CommentText="Evaluation and EvaluationService classes and IContentEvaluated Interface are stored in a class library.">
+    <Position X="4.787" Y="2.331" Height="0.608" Width="5.642" />
+  </Comment>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

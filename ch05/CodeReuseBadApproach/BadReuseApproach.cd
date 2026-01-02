@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="CodeReuseBadApproach.Package">
+    <Position X="4" Y="5.25" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAABAAAAAAAAAA=</HashCode>
+      <FileName>Package.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Evaluations" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="CodeReuseBadApproach.City">
+    <Position X="4" Y="1" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAABAAAAAAAAAA=</HashCode>
+      <FileName>City.cs</FileName>
+      <NewMemberFileName>DestinationExpert.cs</NewMemberFileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Evaluations" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="CodeReuseBadApproach.DestinationExpert">
+    <Position X="0.75" Y="3" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAABAAAAAAAAAA=</HashCode>
+      <FileName>DestinationExpert.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Evaluations" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="CodeReuseBadApproach.Evaluation">
+    <Position X="4.5" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAADAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMAAAA=</HashCode>
+      <FileName>Evaluation.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CodeReuseBadApproach.Comments">
+    <Position X="7" Y="3" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAABAAAAAAAAAA=</HashCode>
+      <FileName>Comments.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Evaluations" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
