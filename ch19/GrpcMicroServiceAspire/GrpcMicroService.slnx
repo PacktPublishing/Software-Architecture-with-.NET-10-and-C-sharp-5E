@@ -1,0 +1,10 @@
+<Solution>
+  <Project Path="FakeSource/FakeSource.csproj" />
+  <Project Path="GrpcMicroService/GrpcMicroService.csproj" Id="c8038ced-2dbe-4fd4-ab7a-6344442bc79d" />
+  <Project Path="GrpcMicroServiceAppHost/GrpcMicroServiceAppHost.csproj" Id="b1666069-62f0-492d-870b-6f82704bf1a6" />
+  <Project Path="GrpcMicroServiceServiceDefaults/GrpcMicroServiceServiceDefaults.csproj" Id="c229dc2a-3bfd-4ab3-a0c9-fde189656b5a" />
+  <Project Path="WorkerMApplicationLayer/WorkerMApplicationServices.csproj" Id="90b88099-b4fb-4058-b23b-748ae9cb6689" />
+  <Project Path="WorkerMDBDriver/WorkerMDBDriver.csproj" Id="eecb2409-202f-454b-b6b3-bd490df70c17" />
+  <Project Path="WorkerMDomainModel/WorkerMDomainModel.csproj" />
+  <Project Path="WorkerMDomainServices/WorkerMDomainServices.csproj" />
+</Solution>

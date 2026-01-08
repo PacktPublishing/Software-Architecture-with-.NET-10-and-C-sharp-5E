@@ -1,0 +1,33 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sql
+  labels:
+    app: sql
+spec:
+  minReadySeconds: 60
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sql
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: sql
+    spec:
+      containers:
+      - name: sql
+        image: mcr.microsoft.com/mssql/server:2022-latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - name: tcp
+          containerPort: 1433
+        envFrom:
+        - configMapRef:
+            name: sql-env
+        - secretRef:
+            name: sql-secrets
+      terminationGracePeriodSeconds: 180

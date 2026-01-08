@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>721f68ac-8787-48f1-80ca-1dec047fd29e</UserSecretsId>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Grpc.AspNetCore" Version="2.64.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.23.0" />
+  </ItemGroup>
+	<ItemGroup>
+		<Protobuf Include="Protos\counting.proto" GrpcServices="Server" />
+	</ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\GrpcMicroServiceServiceDefaults\GrpcMicroServiceServiceDefaults.csproj" />
+    <ProjectReference Include="..\WorkerMApplicationLayer\WorkerMApplicationServices.csproj" />
+    <ProjectReference Include="..\WorkerMDBDriver\WorkerMDBDriver.csproj" />
+  </ItemGroup>
+
+</Project>
