@@ -1,0 +1,162 @@
+# This workflow will build and deploy a .NET Core app to Azure Web Apps across multiple environments.
+#
+# Multi-Stage Deployment:
+# - Development: Automatically deploys on push to main
+# - Staging: Automatically deploys after dev on push to main
+# - Production: Requires manual workflow_dispatch trigger
+#
+# This workflow assumes you have already created the target Azure App Service web apps for each environment.
+# For instructions see https://docs.microsoft.com/en-us/azure/app-service/quickstart-dotnetcore?tabs=net60&pivots=development-environment-vscode
+#
+# To configure this workflow:
+#
+# 1. Download the Publish Profile for each Azure Web App (dev, staging, production).
+#    You can download these files from the Overview page of each Web App in the Azure Portal.
+#    For more information: https://docs.microsoft.com/en-us/azure/app-service/deploy-github-actions?tabs=applevel#generate-deployment-credentials
+#
+# 2. Create three secrets in your repository:
+#    - AZURE_WEBAPP_PUBLISH_PROFILE_DEV (for development environment)
+#    - AZURE_WEBAPP_PUBLISH_PROFILE_STAGING (for staging environment)
+#    - AZURE_WEBAPP_PUBLISH_PROFILE_PROD (for production environment)
+#    For instructions on obtaining the publish profile see: https://docs.microsoft.com/azure/app-service/deploy-github-actions#configure-the-github-secret
+#
+# 3. Configure GitHub Environments (development, staging, production) with appropriate protection rules.
+#
+# 4. Create or update Azure Web Apps for each environment with names matching the environment variables below.
+#
+# For more information on GitHub Actions for Azure: https://github.com/Azure/Actions
+# For more information on the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
+# For more samples to get started with GitHub Action workflows to deploy to Azure: https://github.com/Azure/actions-workflow-samples
+
+name: Build and deploy ASP.Net Core app to Azure Web Apps (Multi-Stage)
+
+env:
+  AZURE_WEBAPP_NAME_DEV: scalability-sample-5E-dev
+  AZURE_WEBAPP_NAME_STAGING: scalability-sample-5E-staging
+  AZURE_WEBAPP_NAME_PROD: scalability-sample-5E
+  AZURE_WEBAPP_PACKAGE_PATH: ch02/scalability-sample-5E/publish
+  CONFIGURATION: Release
+  DOTNET_CORE_VERSION: 10.0.x
+  WORKING_DIRECTORY: ch02/scalability-sample-5E
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Target environment'
+        required: true
+        type: choice
+        options:
+          - dev
+          - staging
+          - production
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Build and Test
+    runs-on: windows-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          include-prerelease: true
+          dotnet-version: ${{ env.DOTNET_CORE_VERSION }}
+      - name: Cache NuGet packages
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.nuget/packages
+            ~/.local/share/NuGet
+          key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj') }}
+      - name: Restore dependencies
+        run: dotnet restore "${{ env.WORKING_DIRECTORY }}"
+      - name: Restore tools
+        run: dotnet tool restore
+      - name: Build application
+        run: dotnet build "${{ env.WORKING_DIRECTORY }}" --configuration ${{ env.CONFIGURATION }} --no-restore
+      - name: Run tests
+        run: dotnet test "${{ env.WORKING_DIRECTORY }}" --no-build --verbosity normal
+      - name: Publish application
+        run: dotnet publish "${{ env.WORKING_DIRECTORY }}" --configuration ${{ env.CONFIGURATION }} --no-build --output "${{ env.AZURE_WEBAPP_PACKAGE_PATH }}"
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: webapp-build
+          path: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+          retention-days: 7
+
+  deploy-dev:
+    name: Deploy to Development
+    needs: build
+    runs-on: windows-latest
+    if: |
+      (github.event_name == 'push' && github.ref == 'refs/heads/main') ||
+      (github.event_name == 'workflow_dispatch' && github.event.inputs.environment == 'dev')
+    environment:
+      name: development
+      url: https://${{ env.AZURE_WEBAPP_NAME_DEV }}.azurewebsites.net
+    steps:
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: webapp-build
+          path: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+      - name: Deploy to Azure WebApp (Development)
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: ${{ env.AZURE_WEBAPP_NAME_DEV }}
+          package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE_DEV }}
+
+  deploy-staging:
+    name: Deploy to Staging
+    needs: [build, deploy-dev]
+    runs-on: windows-latest
+    if: |
+      (github.event_name == 'push' && github.ref == 'refs/heads/main') ||
+      (github.event_name == 'workflow_dispatch' && github.event.inputs.environment == 'staging')
+    environment:
+      name: staging
+      url: https://${{ env.AZURE_WEBAPP_NAME_STAGING }}.azurewebsites.net
+    steps:
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: webapp-build
+          path: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+      - name: Deploy to Azure WebApp (Staging)
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: ${{ env.AZURE_WEBAPP_NAME_STAGING }}
+          package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE_STAGING }}
+
+  deploy-production:
+    name: Deploy to Production
+    needs: [build, deploy-staging]
+    runs-on: windows-latest
+    if: github.event_name == 'workflow_dispatch' && github.event.inputs.environment == 'production'
+    environment:
+      name: production
+      url: https://${{ env.AZURE_WEBAPP_NAME_PROD }}.azurewebsites.net
+    steps:
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: webapp-build
+          path: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+      - name: Deploy to Azure WebApp (Production)
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: ${{ env.AZURE_WEBAPP_NAME_PROD }}
+          package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE_PROD }}
