@@ -1,0 +1,30 @@
+resources:
+- deployment.yaml
+- service.yaml
+
+generatorOptions:
+  disableNameSuffixHash: true
+
+configMapGenerator:
+- name: grpcmicroservice-env
+  literals:
+    - OTEL_DOTNET_EXPERIMENTAL_OTLP_EMIT_EXCEPTION_LOG_ATTRIBUTES=true
+    - OTEL_DOTNET_EXPERIMENTAL_OTLP_EMIT_EVENT_LOG_ATTRIBUTES=true
+    - OTEL_DOTNET_EXPERIMENTAL_OTLP_RETRY=in_memory
+    - ASPNETCORE_FORWARDEDHEADERS_ENABLED=true
+    - HTTP_PORTS=8080
+    - DEFAULTCONNECTION_HOST=sql
+    - DEFAULTCONNECTION_PORT=1433
+    - DEFAULTCONNECTION_USERNAME=sa
+    - DEFAULTCONNECTION_PASSWORD=UMbfyliEKDr6hG8qk68sfi
+    - DEFAULTCONNECTION_URI=mssql://sa:UMbfyliEKDr6hG8qk68sfi@sql:1433/DefaultConnection
+    - DEFAULTCONNECTION_JDBCCONNECTIONSTRING=jdbc:sqlserver://sql:1433;trustServerCertificate=true;databaseName=DefaultConnection
+    - DEFAULTCONNECTION_DATABASENAME=DefaultConnection
+    - OTEL_EXPORTER_OTLP_ENDPOINT=http://aspire-dashboard:18889
+    - OTEL_SERVICE_NAME=grpcmicroservice
+    - ASPNETCORE_URLS=http://+:8080;
+
+secretGenerator:
+- name: grpcmicroservice-secrets
+  envs:
+  - .grpcmicroservice.secrets

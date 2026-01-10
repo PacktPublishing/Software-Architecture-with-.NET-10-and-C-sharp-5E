@@ -1,0 +1,13 @@
+namespace: grpcserviceexample
+
+resources:
+- sql
+- grpcmicroservice
+- fakesource
+- namespace.yaml
+- dashboard.yaml
+
+generatorOptions:
+  disableNameSuffixHash: true
+
+

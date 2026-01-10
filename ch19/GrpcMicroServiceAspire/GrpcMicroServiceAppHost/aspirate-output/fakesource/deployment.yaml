@@ -1,0 +1,28 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fakesource
+  labels:
+    app: fakesource
+spec:
+  minReadySeconds: 60
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fakesource
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: fakesource
+    spec:
+      containers:
+      - name: fakesource
+        image: fakesource:latest
+        imagePullPolicy: IfNotPresent
+        envFrom:
+        - configMapRef:
+            name: fakesource-env
+      terminationGracePeriodSeconds: 180

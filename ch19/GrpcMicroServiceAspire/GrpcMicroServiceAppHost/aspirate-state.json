@@ -1,0 +1,33 @@
+{
+  "projectPath": ".",
+  "outputPath": "aspirate-output",
+  "namespace": "grpcserviceexample",
+  "containerImageTags": [
+    "latest"
+  ],
+  "imagePullPolicy": "IfNotPresent",
+  "containerBuilder": "docker",
+  "outputFormat": "kustomize",
+  "skipFinalKustomizeGeneration": false,
+  "privateRegistryEmail": "aspir8@aka.ms",
+  "includeDashboard": true,
+  "useCustomNamespace": true,
+  "secrets": {
+    "salt": "dWgcwHvWGTo/LX2x",
+    "hash": "JPD\u002BoB6rP5QzJH\u002BowmKfTibbpyeqm6sYl0k4hVqt7qc=",
+    "secrets": {
+      "sql-password": {
+        "value": "dWgcwHvWGTo/LX2xcWbeP/Y877SQwaMnArTlioi2iskUziLxiZKL/XkyR1E5So7fXEo="
+      },
+      "sql": {
+        "MSSQL_SA_PASSWORD": "dWgcwHvWGTo/LX2xcWbeP/Y877SQwaMnArTlioi2iskUziLxiZKL/XkyR1E5So7fXEo="
+      },
+      "DefaultConnection": {},
+      "grpcmicroservice": {
+        "ConnectionStrings__DefaultConnection": "dWgcwHvWGTo/LX2xgT5UGKgIQbnTFrc6oVGYaY6emtkI0HbHs7rV\u002BiVGTBsHD9PeGmr\u002B3QQFLFip0N1a/6GlGhQKcuLK2EkZuWUWRMXjkPd6BS/Rh2glNqcYypSEgFKZ4PjnCfmFt3YYdNp9txpA2yjiGZbX9PP3bk3VNW5VfxsrvrLrm82JXvCp3n8Tm8\u002BzPzzBvA=="
+      },
+      "fakesource": {}
+    }
+  },
+  "processAllComponents": true
+}
