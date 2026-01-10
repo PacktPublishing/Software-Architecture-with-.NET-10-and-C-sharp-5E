@@ -36,7 +36,7 @@ permissions:
   contents: read
 
 jobs:
-  build-and-deploy:
+  build:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v4
@@ -62,6 +62,15 @@ jobs:
       - name: Publish
         run: dotnet publish "${{ env.WORKING_DIRECTORY }}" --configuration ${{ env.CONFIGURATION }} --no-build --output "${{ env.AZURE_WEBAPP_PACKAGE_PATH }}"
 
+
+  deploy:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v3
+        with:
+          include-prerelease: true
+          dotnet-version: ${{ env.DOTNET_CORE_VERSION }}
       - name: Deploy to Azure WebApp
         uses: azure/webapps-deploy@v2
         with:
