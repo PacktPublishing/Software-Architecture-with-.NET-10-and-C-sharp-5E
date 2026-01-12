@@ -10,15 +10,22 @@
 #
 # To configure this workflow:
 #
-# 1. Download the Publish Profile for each Azure Web App (dev, staging, production).
-#    You can download these files from the Overview page of each Web App in the Azure Portal.
-#    For more information: https://docs.microsoft.com/en-us/azure/app-service/deploy-github-actions?tabs=applevel#generate-deployment-credentials
+# 1. Set up Azure Active Directory (Entra ID) authentication with OIDC (OpenID Connect):
+#    a. Create an Azure AD App Registration for GitHub Actions
+#    b. Configure Federated Credentials for your GitHub repository
+#       - Entity type: Environment (for development, staging, production)
+#       - GitHub environment name: development, staging, production respectively
+#    c. Grant the App Registration appropriate permissions to deploy to Azure App Service
+#    d. Note the following values from your App Registration:
+#       - Client ID (Application ID)
+#       - Tenant ID (Directory ID)
+#       - Subscription ID
+#    For detailed instructions: https://learn.microsoft.com/azure/developer/github/connect-from-azure
 #
-# 2. Create three secrets in your repository:
-#    - AZURE_WEBAPP_PUBLISH_PROFILE_DEV (for development environment)
-#    - AZURE_WEBAPP_PUBLISH_PROFILE_STAGING (for staging environment)
-#    - AZURE_WEBAPP_PUBLISH_PROFILE_PROD (for production environment)
-#    For instructions on obtaining the publish profile see: https://docs.microsoft.com/azure/app-service/deploy-github-actions#configure-the-github-secret
+# 2. Create the following secrets in your repository or GitHub Environments:
+#    - AZURE_CLIENT_ID: The Application (client) ID from your App Registration
+#    - AZURE_TENANT_ID: The Directory (tenant) ID from your App Registration
+#    - AZURE_SUBSCRIPTION_ID: Your Azure subscription ID
 #
 # 3. Configure GitHub Environments (development, staging, production) with appropriate protection rules.
 #
@@ -57,6 +64,7 @@ on:
 
 permissions:
   contents: read
+  id-token: write  # Required for OIDC authentication with Azure
 
 jobs:
   build:
@@ -66,7 +74,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
       - name: Setup .NET
-        uses: actions/setup-dotnet@v3
+        uses: actions/setup-dotnet@v4
         with:
           include-prerelease: true
           dotnet-version: ${{ env.DOTNET_CORE_VERSION }}
@@ -110,12 +118,17 @@ jobs:
         with:
           name: webapp-build
           path: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+      - name: Azure Login
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
       - name: Deploy to Azure WebApp (Development)
-        uses: azure/webapps-deploy@v2
+        uses: azure/webapps-deploy@v3
         with:
           app-name: ${{ env.AZURE_WEBAPP_NAME_DEV }}
           package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
-          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE_DEV }}
 
   deploy-staging:
     name: Deploy to Staging
@@ -133,12 +146,17 @@ jobs:
         with:
           name: webapp-build
           path: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+      - name: Azure Login
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
       - name: Deploy to Azure WebApp (Staging)
-        uses: azure/webapps-deploy@v2
+        uses: azure/webapps-deploy@v3
         with:
           app-name: ${{ env.AZURE_WEBAPP_NAME_STAGING }}
           package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
-          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE_STAGING }}
 
   deploy-production:
     name: Deploy to Production
@@ -154,9 +172,14 @@ jobs:
         with:
           name: webapp-build
           path: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+      - name: Azure Login
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
       - name: Deploy to Azure WebApp (Production)
-        uses: azure/webapps-deploy@v2
+        uses: azure/webapps-deploy@v3
         with:
           app-name: ${{ env.AZURE_WEBAPP_NAME_PROD }}
           package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
-          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE_PROD }}
