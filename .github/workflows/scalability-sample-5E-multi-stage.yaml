@@ -31,13 +31,13 @@
 name: Build and deploy ASP.Net Core app to Azure Web Apps (Multi-Stage)
 
 env:
-  AZURE_WEBAPP_NAME_DEV: scalability-sample-5E-dev
-  AZURE_WEBAPP_NAME_STAGING: scalability-sample-5E-staging
-  AZURE_WEBAPP_NAME_PROD: scalability-sample-5E
-  AZURE_WEBAPP_PACKAGE_PATH: ch02/scalability-sample-5E/publish
+  AZURE_WEBAPP_NAME_DEV: dev-wwtravelclub
+  AZURE_WEBAPP_NAME_STAGING: staging-wwtravelclub
+  AZURE_WEBAPP_NAME_PROD: wwtravelclub
+  AZURE_WEBAPP_PACKAGE_PATH: ch08/wwtravelclub/publish
   CONFIGURATION: Release
   DOTNET_CORE_VERSION: 10.0.x
-  WORKING_DIRECTORY: ch02/scalability-sample-5E
+  WORKING_DIRECTORY: ch08/wwtravelclub
 
 on:
   push:
