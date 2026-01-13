@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using ch08.Services;
 
 namespace ch08
 {
@@ -24,6 +25,7 @@ namespace ch08
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddRazorPages();
+            services.AddSingleton<ITravelDistanceService, TravelDistanceService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

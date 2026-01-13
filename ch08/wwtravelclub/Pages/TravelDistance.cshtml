@@ -1,0 +1,51 @@
+@page
+@model TravelDistanceModel
+@{
+    ViewData["Title"] = "Travel Distance";
+}
+<h1>@ViewData["Title"]</h1>
+
+<p>Calculate the distance between two cities.</p>
+
+<form method="post">
+    <div class="form-group">
+        <label for="City1">From City:</label>
+        <select class="form-control" id="City1" name="City1" asp-for="City1">
+            <option value="">-- Select a city --</option>
+            @foreach (var city in Model.AvailableCities)
+            {
+                <option value="@city">@city</option>
+            }
+        </select>
+    </div>
+    
+    <div class="form-group">
+        <label for="City2">To City:</label>
+        <select class="form-control" id="City2" name="City2" asp-for="City2">
+            <option value="">-- Select a city --</option>
+            @foreach (var city in Model.AvailableCities)
+            {
+                <option value="@city">@city</option>
+            }
+        </select>
+    </div>
+    
+    <button type="submit" class="btn btn-primary">Calculate Distance</button>
+</form>
+
+@if (!string.IsNullOrEmpty(Model.ErrorMessage))
+{
+    <div class="alert alert-danger mt-3" role="alert">
+        @Model.ErrorMessage
+    </div>
+}
+
+@if (Model.Distance.HasValue)
+{
+    <div class="alert alert-success mt-3" role="alert">
+        <h4>Distance Result</h4>
+        <p>The distance between <strong>@Model.City1</strong> and <strong>@Model.City2</strong> is approximately:</p>
+        <h3>@Model.Distance.Value.ToString("N2") km</h3>
+        <p>(@(Model.Distance.Value * 0.621371).ToString("N2") miles)</p>
+    </div>
+}
