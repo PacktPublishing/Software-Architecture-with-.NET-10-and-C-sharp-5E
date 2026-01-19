@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 18
-VisualStudioVersion = 18.3.11408.92 d18.3
+VisualStudioVersion = 18.3.11408.92
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PackagesManagement", "PackagesManagement\PackagesManagement.csproj", "{F494C23F-065F-42F9-969F-88D8D91A1C6F}"
 EndProject
@@ -10,6 +10,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PackagesManagementDB", "PackagesManagementDB\PackagesManagementDB.csproj", "{C2B30C4F-87D1-426B-88D7-F221C72BBF13}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApplicationSample", "WebApplicationSample\WebApplicationSample.csproj", "{CB058462-9E06-4E86-B6FF-6FDFCE0D8ECF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApplicationMVCSample", "WebApplicationMVCSample\WebApplicationMVCSample.csproj", "{871B5437-6DC1-4F6D-ADE3-61C2894E1FDA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{CB058462-9E06-4E86-B6FF-6FDFCE0D8ECF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CB058462-9E06-4E86-B6FF-6FDFCE0D8ECF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CB058462-9E06-4E86-B6FF-6FDFCE0D8ECF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{871B5437-6DC1-4F6D-ADE3-61C2894E1FDA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{871B5437-6DC1-4F6D-ADE3-61C2894E1FDA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{871B5437-6DC1-4F6D-ADE3-61C2894E1FDA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{871B5437-6DC1-4F6D-ADE3-61C2894E1FDA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
