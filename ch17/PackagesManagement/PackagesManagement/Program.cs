@@ -17,6 +17,12 @@ builder.Services.AddAuthentication(
     {
         o.LoginPath = "/account/login";
         o.SlidingExpiration = true;
+        o.Cookie = new CookieBuilder
+        {
+            SameSite = SameSiteMode.Lax,
+            HttpOnly = true,
+            SecurePolicy = CookieSecurePolicy.Always
+        };
     });
 var app = builder.Build();
 

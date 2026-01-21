@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="ClientAuthentication/ClientAuthentication.csproj" />
+  <Project Path="ClientAuthentitationClient/ClientAuthentitationClient.csproj" />
+</Solution>
