@@ -1,0 +1,14 @@
+Certificates can be created with OpenSSL by opening a Linux console (On Windows you must have installed WSL 2).
+
+1. Generate certification authority key: openssl genrsa -out root_cc.key 2048
+2. Generate self-signed certificate : openssl req -x509 -new -key root_cc.key -sha256 -subj "/CN=localCA" -days 3650 -out root_cc.crt
+3. Generate .pfx: openssl pkcs12 -export -inkey root_cc.key -in root_cc.crt -out root_cc.pfx
+
+Now Generate client certificate
+
+4. Generate client key: openssl genrsa -out client1_cc.key 2048
+5. Generate certificate signing request: openssl req -new -sha256 -key client1_cc.key -subj "/CN=testClient/O=testGroup" -out client1_cc.csr
+6. Generate certificate signed by local certification authorithy: 
+	openssl x509 -req -in client1_cc.csr -CA root_cc.crt -CAkey root_cc.key -CAcreateserial -out client1_cc.crt -days 3650 -sha256
+7. Generate .pfx: openssl pkcs12 -export -inkey client1_cc.key -in client1_cc.crt -out client1_cc.pfx
+ 
